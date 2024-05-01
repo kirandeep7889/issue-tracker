@@ -1,9 +1,11 @@
 import IssueStattusBadge from '@/app/components/IssueStattusBadge';
 import prisma from '@/prisma/client';
-import { Card, Flex, Heading, Text } from '@radix-ui/themes';
+import { Box, Button, Card, Flex, Grid, Heading, Text } from '@radix-ui/themes';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown'
 import delay from 'delay';
+import { Pencil2Icon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
 interface props {
     params: {id:string}
@@ -22,7 +24,8 @@ const IssueDetailPage =  async({params}:props) => {
     await delay(2000);
 
     return (
-    <div>
+    <Grid columns={{initial: "1",md:"2"}} gap="5">
+      <Box>
         <Heading>{issue.title}</Heading>
         <Flex className='space-x-3' my="2">
             <IssueStattusBadge status={issue.status}/>
@@ -31,7 +34,14 @@ const IssueDetailPage =  async({params}:props) => {
         <Card className='prose mt-4'>
           <ReactMarkdown>{issue.description}</ReactMarkdown>
         </Card>  
-    </div>
+      </Box>
+      <Box>
+         <Button>
+           <Pencil2Icon/>
+           <Link href={`/issues/${issue.id}/edit`}>Edit issue</Link>
+         </Button>
+      </Box>  
+    </Grid>
   )
 }
 
