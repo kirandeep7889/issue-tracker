@@ -4,6 +4,7 @@ import React from 'react'
 import IssueStattusBadge from '../components/IssueStattusBadge';
 import delay from 'delay';
 import IssuesActions from "./IssuesActions"
+import Link from 'next/link';
 
 
 const IssuesPage =  async() => {
@@ -25,7 +26,9 @@ const IssuesPage =  async() => {
               {issues.map(issue=>(
                 <Table.Row key={issue.id}>
                     <Table.Cell>
-                      {issue.title}
+                      <Link href={`/issues/${issue.id}`}>
+                        {issue.title}
+                      </Link>
                       <div className='block md:hidden'>
                         <IssueStattusBadge status={issue.status} />
                       </div>
