@@ -5,7 +5,7 @@ import NavBar from './NavBar'
 import '@radix-ui/themes/styles.css';
 import './theme-config.css'
 import { Container, Theme, ThemePanel } from '@radix-ui/themes';
-import AuthProvider from './api/auth/Provider';
+import AuthProvider from './auth/Provider';
 import QueryClientProvider from './QueryClientProvider';
 
 
