@@ -13,13 +13,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     data: users,
     error,
     isLoading,
-  } = useQuery<User[]>({
-    queryKey: ["users"],
-    queryFn: () =>
-      axios.get("/api/users").then((res) => res.data),
-    staleTime: 60 * 1000, //60s
-    retry: 3,
-  });
+  } = useUsers();
 
   if (isLoading) return <Skeleton />;
 
@@ -34,8 +28,9 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
       onValueChange={async(userId) => {
          try {
            await axios.patch("/api/issues/" + issue.id, {
-            assignedToUserId: userId !== "unassigned" ? userId : null,
+            assignedToUserId: userId !== "unassigned" ? userId : null,     
           });
+          toast.success("Assigned Issue Successfully")
          } catch (error) {
              toast.error('Changes could not be saved');
          }
@@ -58,5 +53,14 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     </>
   );
 };
+
+const useUsers = () =>
+  useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () =>
+      axios.get("/api/users").then((res) => res.data),
+    staleTime: 60 * 1000, //60s
+    retry: 3,
+  });
 
 export default AssigneeSelect;
