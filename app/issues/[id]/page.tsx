@@ -40,7 +40,15 @@ const session= await getServerSession(authOptions)
 }
 
 export async function generateMetaData({ params}: Props) {
+<<<<<<< HEAD
   const issue=await fetchUser(parseInt(params.id))
+=======
+  const issue=await prisma.issue.findUnique({
+    where: {
+      id:parseInt(params.id)
+    }
+  })
+>>>>>>> 773695e5b94c9b5ecfcb6901e11a48177571da3d
   return {
     title: issue?.title,
     description : 'Details of issue' + issue?.id
